@@ -46,6 +46,7 @@ export abstract class BaseDownload {
       await this.downloadRawData().catch(() =>
         reject(`Error reading ${this.data.id}`)
       )
+
       if (this.data.valid) {
         await this.parseData()
         await this.writeToFile().catch(() =>
@@ -61,13 +62,15 @@ export abstract class BaseDownload {
   protected async downloadRawData(): Promise<this> {
     try {
       const resp = await got(this.data.url)
-      if (resp.statusCode === 404) {
+
+      if (resp.statusCode !== 200) {
         this.data.valid = false
       } else {
         this.data.rawData = resp.body
         this.data.valid = true
       }
     } catch (e) {
+      this.data.valid = false
       throw new Error(e)
     }
 
