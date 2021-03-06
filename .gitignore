@@ -1,0 +1,4 @@
+node_modules/
+dist/
+src/sites/*.ts
+!src/sites/example.ts
