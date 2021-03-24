@@ -1,8 +1,6 @@
-import { s } from '../visible/rep'
 import chalk from 'chalk'
 import { loadConfig, removeFailed, setLatest } from '../handlers/ConfigHandler'
-import { loadSites } from '../handlers/SiteHandler'
-import { load } from 'cheerio'
+import { s } from '../visible/rep'
 
 interface Range {
   final: number

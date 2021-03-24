@@ -43,19 +43,15 @@ export abstract class BaseDownload {
 
   protected async downloadPrivate(): Promise<this> {
     return new Promise(async (resolve, reject) => {
-      await this.downloadRawData().catch(() =>
-        reject(`Error reading ${this.data.id}`)
-      )
-
-      if (this.data.valid) {
-        await this.parseData()
-        await this.writeToFile().catch(() =>
-          reject(`Error writing chapter ${this.data.id} to a file`)
-        )
-        resolve(this)
-      } else {
-        reject(`Chapter (${this.data.id}) doesn't exist`)
-      }
+      await this.downloadRawData()
+        .then(async () => {
+          await this.parseData()
+          await this.writeToFile()
+          resolve(this)
+        })
+        .catch(() => {
+          reject(`Error reading ${this.data.id}`)
+        })
     })
   }
 

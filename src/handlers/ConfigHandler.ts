@@ -33,7 +33,13 @@ export let loadConfig = async (): Promise<Config> => {
 
 export async function addFailed(failed: Failed): Promise<void> {
   let previousFail = (await getKey('failed')) || []
-  await setKey('failed', [...previousFail, failed])
+  if (
+    !previousFail.find(
+      (f: Failed) => JSON.stringify(f) === JSON.stringify(failed)
+    )
+  ) {
+    await setKey('failed', [...previousFail, failed])
+  }
 }
 
 export async function removeFailed(failed: Failed): Promise<void> {

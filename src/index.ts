@@ -62,7 +62,7 @@ async function menu(): Promise<void> {
   console.log('\n\n')
   const siteNameShow = sites.map((si, i) => {
     const numFailedChap: number = config.failed
-      ? config.failed.filter((f) => f === si.name).length
+      ? config.failed.filter((f) => f.name === si.name).length
       : 0
     let temp = [
       chalk.blue(s.m),
